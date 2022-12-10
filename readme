@@ -26,7 +26,7 @@ date = Utilities.formatDate(new Date(), timeZone, "MM-dd-yyyy | HH:mm:ss");
     record_array.push(answer);
   }
    
-   var url = '***OBFUSCATED_URL***'; 
+   var url = 'https://docs.google.com/spreadsheets/d/***OBFUSCATED_URL***'; 
   var ss = SpreadsheetApp.openByUrl(url);
   var dataSheet = ss.getSheetByName("Arkusz1");
 
