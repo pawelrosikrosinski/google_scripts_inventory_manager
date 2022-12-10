@@ -1,0 +1,60 @@
+//PONIŻSZY KOD JEST WŁASNOŚCIĄ PAWŁA ROSIK-ROSIŃSKIEGO
+
+
+function onFormSubmit(event) {
+var timeZone = Session.getScriptTimeZone();
+date = Utilities.formatDate(new Date(), timeZone, "MM-dd-yyyy | HH:mm:ss");
+  record_array = []
+
+  var form = FormApp.openById('1WUSv3dQx4-Y6MEEUxPLERkczpXjoVfdgqTlWWYB6bkw');
+  var formResponses = form.getResponses();
+  var formCount = formResponses.length;
+
+  var formResponse = formResponses[formCount - 1];
+  var itemResponses = formResponse.getItemResponses();
+
+  for (var j = 0; j < itemResponses.length; j++) {
+  var itemResponse = itemResponses[j];
+    var title = itemResponse.getItem().getTitle();
+    var answer = itemResponse.getResponse();
+
+
+
+    Logger.log(title);
+    Logger.log(answer);
+
+    record_array.push(answer);
+  }
+   
+   var url = '***OBFUSCATED_URL***'; 
+  var ss = SpreadsheetApp.openByUrl(url);
+  var dataSheet = ss.getSheetByName("Arkusz1");
+
+  
+  try {
+    var search_string = record_array[0];
+  var textFinder = dataSheet.createTextFinder(search_string);
+  var search_row = textFinder.findNext().getRow();
+  
+  
+for(var h = 0; h < 5; h++){
+
+ if(record_array[h] != ""){
+       dataSheet.getRange(search_row, h+1, 1, 1).setValues([[record_array[h]]]);
+ }
+}
+dataSheet.getRange(search_row, 6, 1, 1).setValues([[date]])
+
+  
+
+  }
+  catch{
+
+dataSheet.appendRow([record_array[0], record_array[1], record_array[2], record_array[3], record_array[4], date]);
+}
+
+
+}
+
+
+ 
